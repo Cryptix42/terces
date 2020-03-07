@@ -1,32 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/*TERCES NAVIGATOR v. 0.1 Alpha
+ * This program contains all the necessary methods for pathfinding across an environment. There are four ways an AI
+ * agent can navigate:
+ * 1. Patrol: The agent traverses between a set of pre-determined points in a pre determined order.
+ * 2. Chase: The agent chases a target till it catches up with the target. If the target hides, the agent
+ * looks around the general area of the target's last seen location.
+ * 3. Locate: The agent uses its memory to navigate to a certain spot previously visited by it
+ * 4. Explore: Fully automated, the agent relies on visual stimuli to look for interesting spots, and explore
+ * the area available to it.
+ */
+
+#region Dependencies
 using UnityEngine;
 using UnityEngine.AI;
+#endregion
 
 public class Navigator : MonoBehaviour
 {
+    #region Reference Variables
     [HideInInspector]
-    public GameObject Me;
+    public GameObject Me; //The agent's own gameobject.
     [HideInInspector]
-    public NavMeshAgent Agent;
-    public enum Modes {Explorer, Patrol, Chase, Locate};
-    public Modes NavMode;
-    public ChainManager ChainMan;
+    public NavMeshAgent Agent;//The pathfinder Agent (UnityEngine.AI)
+    public ChainManager ChainMan; //Reference to the Chain Manager object.
+    #endregion
+
+    #region Main Variables
+    public enum Modes {Patrol, Chase, Locate, Explore}; //Four modes of the agent, refer documentation.
+    public Modes NavMode; //Shows a nifty drop down in the Editor.
+    #endregion
+
+    #region Patrol Behavior Variables
     public WaypointChain TargetChain;
+    #endregion
+
+    #region Main Methods
     // Start is called before the first frame update
     void Start()
     {
-        if(NavMode==Modes.Patrol)
+        OnModeChanged();
+    }
+
+    void OnModeChanged()
+    {
+        if (NavMode == Modes.Patrol)
         {
-            if(TargetChain == null)
+            if (TargetChain == null)
             {
                 TargetChain = FindNearestWaypoint();
             }
             PatrolWaypoints(TargetChain);
         }
     }
+    #endregion
 
-
+    #region Patrol
     void PatrolWaypoints(WaypointChain wChain)
     {
         Agent.SetDestination(wChain.Waypoints[0].position);
@@ -48,4 +75,10 @@ public class Navigator : MonoBehaviour
         }
         return ChainMan.Chains[NearestChainIndex];
     }
+    #endregion
 }
+
+/*
+ * TODO: Chain handling
+ * 
+ */
