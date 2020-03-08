@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WaypointChain : MonoBehaviour
 {
-    [SerializeField]
     public List<Navigator> AgentsInChain;
     public Transform ChainStart;
     public AgentManager AgentMan;
@@ -14,14 +13,28 @@ public class WaypointChain : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < AgentMan.Agents.Length; i++)
+        
+    }
+
+    public void PopulateAgentsList()
+    {
+        for (int i = 0; i < AgentMan.Agents.Count; i++)
         {
-            Debug.Log("Entered Loop");
-            
-            if (AgentMan.Agents[i].TargetChain == GetComponent<WaypointChain>())
+            if (AgentMan.Agents[i].GetComponent<Navigator>().TargetChain == GetComponent<WaypointChain>())
             {
-                Debug.Log("Adding " + AgentMan.Agents[i].RefID + " to the list of active agents...");
-                AgentsInChain.Add(AgentMan.Agents[i]);
+                bool flag = false;
+                for(int j = 0; j < AgentsInChain.Count; j++)
+                {
+                    if(AgentsInChain[j] == AgentMan.Agents[i].GetComponent<Navigator>())
+                    {
+                        flag = true;
+                    }
+                }
+                if(!flag)
+                {
+                    Debug.Log("Adding " + AgentMan.Agents[i].GetComponent<Navigator>().RefID + " to the list of active agents of chain " + gameObject.name +".....");
+                    AgentsInChain.Add(AgentMan.Agents[i].GetComponent<Navigator>());
+                }
             }
         }
     }

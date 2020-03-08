@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class ChainManager : MonoBehaviour
 {
-    public WaypointChain[] Chains;
+    public List<GameObject> Chains = new List<GameObject>();
     
     private int c;
 
-    
+    void Awake()
+
+    {
+
+        Chains.AddRange(GameObject.FindGameObjectsWithTag("Waypoint Chain"));
+
+    }
+
+
+
 }

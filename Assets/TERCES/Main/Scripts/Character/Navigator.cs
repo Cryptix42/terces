@@ -39,6 +39,10 @@ public class Navigator : MonoBehaviour
     {
         Me = gameObject;
         Agent = Me.GetComponent<NavMeshAgent>();
+    }
+
+    private void Start()
+    {
         OnModeChanged();
     }
 
@@ -50,6 +54,7 @@ public class Navigator : MonoBehaviour
             {
                 TargetChain = FindNearestWaypoint();
             }
+            TargetChain.PopulateAgentsList();
             PatrolWaypoints(TargetChain);
         }
     }
@@ -65,9 +70,9 @@ public class Navigator : MonoBehaviour
     {
         int NearestChainIndex = 0;
         float NearestChainDistance = Mathf.Infinity;
-        for(int i = 0; i < ChainMan.Chains.Length; i++)
+        for(int i = 0; i < ChainMan.Chains.Count; i++)
         {
-            Vector3 wPos = ChainMan.Chains[i].ChainStart.position;
+            Vector3 wPos = ChainMan.Chains[i].GetComponent<WaypointChain>().ChainStart.position;
             float CurrentChainDistance = Vector3.Distance(Me.transform.position, wPos);
             if (CurrentChainDistance < NearestChainDistance)
             {
@@ -75,7 +80,7 @@ public class Navigator : MonoBehaviour
                 NearestChainDistance = CurrentChainDistance;
             }
         }
-        return ChainMan.Chains[NearestChainIndex];
+        return ChainMan.Chains[NearestChainIndex].GetComponent<WaypointChain>();
     }
     #endregion
 }

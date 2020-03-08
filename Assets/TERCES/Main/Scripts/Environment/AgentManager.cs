@@ -5,5 +5,11 @@ using UnityEngine.AI;
 
 public class AgentManager : MonoBehaviour
 {
-    public Navigator[] Agents;
+    public List<GameObject> Agents = new List<GameObject>();
+
+    void Awake()
+
+    {
+        Agents.AddRange(GameObject.FindGameObjectsWithTag("TERCES Agent"));
+    }
 }
