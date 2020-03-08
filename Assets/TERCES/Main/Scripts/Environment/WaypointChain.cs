@@ -8,8 +8,6 @@ public class WaypointChain : MonoBehaviour
     public Transform ChainStart;
     public AgentManager AgentMan;
     public float ScannerRadius;
-    private float NearDist = Mathf.Infinity;
-
 
     private void Start()
     {

@@ -25,14 +25,20 @@ public class Waypoint : MonoBehaviour
 
     private void Update()
     {
-        if(!isEndpoint)
+        for (int i = 0; i < ParentChain.AgentsInChain.Count; i++)
         {
-            for (int i = 0; i < ParentChain.AgentsInChain.Count; i++)
+            if (Vector3.Distance(ParentChain.AgentsInChain[i].transform.position, transform.position) < AreaOfInfluence)
             {
-                if (Vector3.Distance(ParentChain.AgentsInChain[i].transform.position, transform.position) < AreaOfInfluence)
+                if (isEndpoint)
+                {
+                    ParentChain.AgentsInChain[i].Agent.SetDestination(ParentChain.ChainStart.position);
+                }
+
+                else
                 {
                     ParentChain.AgentsInChain[i].Agent.SetDestination(NextWaypoint.position);
                 }
+
             }
         }
     }
