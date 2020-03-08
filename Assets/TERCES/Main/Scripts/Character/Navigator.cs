@@ -27,6 +27,7 @@ public class Navigator : MonoBehaviour
     #region Main Variables
     public enum Modes {Patrol, Chase, Locate, Explore}; //Four modes of the agent, refer documentation.
     public Modes NavMode; //Shows a nifty drop down in the Editor.
+    public string RefID; //ID of the agent. Debug only.
     #endregion
 
     #region Patrol Behavior Variables
@@ -34,9 +35,10 @@ public class Navigator : MonoBehaviour
     #endregion
 
     #region Main Methods
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+        Me = gameObject;
+        Agent = Me.GetComponent<NavMeshAgent>();
         OnModeChanged();
     }
 
@@ -77,8 +79,3 @@ public class Navigator : MonoBehaviour
     }
     #endregion
 }
-
-/*
- * TODO: Chain handling
- * 
- */

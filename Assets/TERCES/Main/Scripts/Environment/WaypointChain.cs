@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class WaypointChain : MonoBehaviour
 {
-    public GameObject[] AgentsInChain;
+    [SerializeField]
+    public List<Navigator> AgentsInChain;
     public Transform[] Waypoints;
     public AgentManager AgentMan;
     public float ScannerRadius;
+    private float NearDist = Mathf.Infinity;
 
 
-    private void Awake()
+    private void Start()
     {
         for (int i = 0; i < AgentMan.Agents.Length; i++)
         {
-            //TODO: Check and decide active agents on this particular chain
+            Debug.Log("Entered Loop");
+            
+            if (AgentMan.Agents[i].TargetChain == GetComponent<WaypointChain>())
+            {
+                Debug.Log("Adding " + AgentMan.Agents[i].RefID + " to the list of active agents...");
+                AgentsInChain.Add(AgentMan.Agents[i]);
+            }
         }
     }
 

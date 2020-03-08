@@ -5,5 +5,5 @@ using UnityEngine.AI;
 
 public class AgentManager : MonoBehaviour
 {
-    public NavMeshAgent[] Agents;
+    public Navigator[] Agents;
 }
