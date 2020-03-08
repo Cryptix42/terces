@@ -12,18 +12,30 @@ public class Waypoint : MonoBehaviour
     public float AreaOfInfluence = 1.0f;
     public Transform NextWaypoint;
     public bool FirstWp;
-    private bool WaypointPassed;
+    private bool isEndpoint;
 
     private void Awake()
     {
         ParentChain = transform.parent.GetComponent<WaypointChain>();
+        if(NextWaypoint == null)
+        {
+            isEndpoint = true;
+        }
     }
 
-    /*private void Update()
+    private void Update()
     {
-        if(!WaypointPassed)
-        {}
-    }*/
+        if(!isEndpoint)
+        {
+            for (int i = 0; i < ParentChain.AgentsInChain.Count; i++)
+            {
+                if (Vector3.Distance(ParentChain.AgentsInChain[i].transform.position, transform.position) < AreaOfInfluence)
+                {
+                    ParentChain.AgentsInChain[i].Agent.SetDestination(NextWaypoint.position);
+                }
+            }
+        }
+    }
 
 
 
