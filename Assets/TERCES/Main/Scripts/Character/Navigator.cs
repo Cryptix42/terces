@@ -32,6 +32,8 @@ public class Navigator : MonoBehaviour
 
     #region Patrol Behavior Variables
     public WaypointChain TargetChain;
+    public enum PatMode {BackToStart, FindNext};
+    public PatMode PatrolMode;
     #endregion
 
     #region Main Methods
@@ -46,7 +48,7 @@ public class Navigator : MonoBehaviour
         OnModeChanged();
     }
 
-    void OnModeChanged()
+    public void OnModeChanged()
     {
         if (NavMode == Modes.Patrol)
         {

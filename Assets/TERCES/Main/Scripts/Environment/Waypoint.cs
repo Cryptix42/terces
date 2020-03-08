@@ -31,14 +31,22 @@ public class Waypoint : MonoBehaviour
             {
                 if (isEndpoint)
                 {
-                    ParentChain.AgentsInChain[i].Agent.SetDestination(ParentChain.ChainStart.position);
+                    
+                    if (ParentChain.AgentsInChain[i].PatrolMode == Navigator.PatMode.BackToStart)
+                    {
+                        ParentChain.AgentsInChain[i].Agent.SetDestination(ParentChain.ChainStart.position);
+                    }
+                    else
+                    {
+                        ParentChain.AgentsInChain[i].TargetChain = null;
+                        ParentChain.AgentsInChain[i].OnModeChanged();
+                    }
                 }
 
                 else
                 {
                     ParentChain.AgentsInChain[i].Agent.SetDestination(NextWaypoint.position);
                 }
-
             }
         }
     }
