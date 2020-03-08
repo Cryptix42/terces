@@ -6,7 +6,7 @@ public class WaypointChain : MonoBehaviour
 {
     [SerializeField]
     public List<Navigator> AgentsInChain;
-    public Transform[] Waypoints;
+    public Transform ChainStart;
     public AgentManager AgentMan;
     public float ScannerRadius;
     private float NearDist = Mathf.Infinity;

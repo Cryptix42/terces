@@ -58,7 +58,7 @@ public class Navigator : MonoBehaviour
     #region Patrol
     void PatrolWaypoints(WaypointChain wChain)
     {
-        Agent.SetDestination(wChain.Waypoints[0].position);
+        Agent.SetDestination(wChain.ChainStart.position);
     }
 
     WaypointChain FindNearestWaypoint()
@@ -67,7 +67,7 @@ public class Navigator : MonoBehaviour
         float NearestChainDistance = Mathf.Infinity;
         for(int i = 0; i < ChainMan.Chains.Length; i++)
         {
-            Vector3 wPos = ChainMan.Chains[i].Waypoints[0].position;
+            Vector3 wPos = ChainMan.Chains[i].ChainStart.position;
             float CurrentChainDistance = Vector3.Distance(Me.transform.position, wPos);
             if (CurrentChainDistance < NearestChainDistance)
             {
