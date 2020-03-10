@@ -5,18 +5,65 @@ using UnityEngine;
 public class Eye : MonoBehaviour
 {
 
+    public TERCESManager Manager;
     public float maxRadius;
-    public int i = 0;
     public float stepValue;
+    public float pulsespeed;
+    public Brain MyBrain;
+    public GameObject Me;
     RaycastHit hit;
     private float curRad = 0.0f;
-    void FixedUpdate()
+    public bool flag = false;
+    void Update()
     {
-        if(curRad<maxRadius)
+        
+
+        #region Sphere Pulse
+        if (curRad<maxRadius)
         {
-            if (Physics.SphereCast(transform.position, curRad, transform.localRotation.eulerAngles, out hit))
+            for (int i = 0; i < Manager.Agents.Count; i++)
             {
-                print("Hit!");
+                if (Physics.SphereCast(transform.position, curRad, transform.localRotation.eulerAngles, out hit))
+                {
+                    flag = false;
+                    for (int j = 0; j < MyBrain.CharactersInMemory.Count; j++)
+                    {
+                        if (MyBrain.CharactersInMemory[j] == Manager.Agents[i])
+                        {
+                            flag = true;
+                        }
+                    }
+                    if (!flag)
+                    {
+                        if (Manager.Agents[i] != Me)
+                        {
+                            //ADD TO MEMORY
+
+                            MyBrain.CharactersInMemory.Add(Manager.Agents[i]);
+                        }
+                    }
+                    flag = false;
+
+                    for (int j = 0; j < MyBrain.POI_InMemory.Count; j++)
+                    {
+                        if (MyBrain.POI_InMemory[j] == Manager.TObjects[i])
+                        {
+                            flag = true;
+                        }
+                        for (int k = 0; k < Manager.Agents.Count; k++)
+                        {
+                            if (Manager.TObjects[i] == Manager.Agents[k])
+                            {
+                                flag = true;
+                            }
+                        }
+                    }
+                    if (!flag)
+                    {
+                        //ADD TO MEMORY
+                        MyBrain.POI_InMemory.Add(Manager.TObjects[i]);
+                    }
+                }
             }
         }
         curRad += stepValue;
@@ -24,7 +71,7 @@ public class Eye : MonoBehaviour
         {
             curRad = 0.0f;
         }
-        i++;
+        #endregion
     }
 
     private void OnDrawGizmos()

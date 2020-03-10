@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Brain : MonoBehaviour
 {
     public Transform EyeLocation;
     public float AngleH, AngleV;
-    public GameObject[] POI_InMemory;
-    public GameObject[] CharactersInMemory;
+    public List<GameObject> POI_InMemory;
+    public List<GameObject> CharactersInMemory;
     public string[] OffensiveTags;
     public string[] FriendlyTags;
     RaycastHit hit;
