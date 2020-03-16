@@ -12,72 +12,25 @@ public class Eye : MonoBehaviour
     public Brain MyBrain;
     public GameObject Me;
     RaycastHit hit;
-    private float curRad = 0.0f;
+    [Range(0, 1)]private float curRad = 0.1f;
     public bool flag = false;
     void Update()
     {
-        
-
-        #region Sphere Pulse
-        if (curRad<maxRadius)
+       /*if(transform.rotation.x>0)
         {
-            for (int i = 0; i < Manager.Agents.Count; i++)
-            {
-                if (Physics.SphereCast(transform.position, curRad, transform.localRotation.eulerAngles, out hit))
-                {
-                    flag = false;
-                    for (int j = 0; j < MyBrain.CharactersInMemory.Count; j++)
-                    {
-                        if (MyBrain.CharactersInMemory[j] == Manager.Agents[i])
-                        {
-                            flag = true;
-                        }
-                    }
-                    if (!flag)
-                    {
-                        if (Manager.Agents[i] != Me)
-                        {
-                            //ADD TO MEMORY
-
-                            MyBrain.CharactersInMemory.Add(Manager.Agents[i]);
-                        }
-                    }
-                    flag = false;
-
-                    for (int j = 0; j < MyBrain.POI_InMemory.Count; j++)
-                    {
-                        if (MyBrain.POI_InMemory[j] == Manager.TObjects[i])
-                        {
-                            flag = true;
-                        }
-                        for (int k = 0; k < Manager.Agents.Count; k++)
-                        {
-                            if (Manager.TObjects[i] == Manager.Agents[k])
-                            {
-                                flag = true;
-                            }
-                        }
-                    }
-                    if (!flag)
-                    {
-                        //ADD TO MEMORY
-                        MyBrain.POI_InMemory.Add(Manager.TObjects[i]);
-                    }
-                }
-            }
-        }
-        curRad += stepValue;
-        if(curRad>maxRadius)
+            transform.Rotate(transform.rotation.x - transform.rotation.x, 0, 0);
+        }*/
+        if(transform.localRotation.x < 0)
         {
-            curRad = 0.0f;
+            transform.Rotate(2,0,0);
         }
-        #endregion
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, curRad);
+        //Gizmos.DrawLine(transform.localPosition, MyBrain.CharactersInMemory[0].transform.position);
     }
     //
 }
