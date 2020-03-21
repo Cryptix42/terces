@@ -21,11 +21,11 @@ public class Navigator : MonoBehaviour
     public GameObject Me; //The agent's own gameobject.
     [HideInInspector]
     public NavMeshAgent Agent;//The pathfinder Agent (UnityEngine.AI)
-    public ChainManager ChainMan; //Reference to the Chain Manager object.
+    public TERCESManager ChainMan; //Reference to the Chain Manager object.
     #endregion
 
     #region Main Variables
-    public enum Modes {Patrol, Chase, Locate, Explore}; //Four modes of the agent, refer documentation.
+    public enum Modes {Patrol, Chase, Locate, Explore, Stand}; //Four modes of the agent, refer documentation.
     public Modes NavMode; //Shows a nifty drop down in the Editor.
     public string RefID; //ID of the agent. Debug only.
     #endregion
@@ -59,6 +59,10 @@ public class Navigator : MonoBehaviour
             TargetChain.PopulateAgentsList();
             PatrolWaypoints(TargetChain);
         }
+        if (NavMode == Modes.Stand)
+        {
+            StandInPlace();
+        }
     }
     #endregion
 
@@ -85,4 +89,9 @@ public class Navigator : MonoBehaviour
         return ChainMan.Chains[NearestChainIndex].GetComponent<WaypointChain>();
     }
     #endregion
+
+    void StandInPlace()
+    {
+        Agent.SetDestination(transform.position);
+    }
 }

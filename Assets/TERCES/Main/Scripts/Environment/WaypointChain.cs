@@ -6,7 +6,7 @@ public class WaypointChain : MonoBehaviour
 {
     public List<Navigator> AgentsInChain;
     public Transform ChainStart;
-    public AgentManager AgentMan;
+    public TERCESManager AgentMan;
     public float ScannerRadius;
 
     private void Start()
